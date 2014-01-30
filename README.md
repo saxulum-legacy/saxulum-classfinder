@@ -1,8 +1,6 @@
 saxulum-classfinder
 ===================
 
-**works with plain silex-php**
-
 [![Build Status](https://api.travis-ci.org/saxulum/saxulum-classfinder.png?branch=master)](https://travis-ci.org/saxulum/saxulum-classfinder)
 [![Total Downloads](https://poser.pugx.org/saxulum/saxulum-classfinder/downloads.png)](https://packagist.org/packages/saxulum/saxulum-classfinder)
 [![Latest Stable Version](https://poser.pugx.org/saxulum/saxulum-classfinder/v/stable.png)](https://packagist.org/packages/saxulum/saxulum-classfinder)
