@@ -1,0 +1,21 @@
+{
+    "name": "saxulum/classfinder",
+    "description": "Saxulum ClassFinder",
+    "keywords": ["class", "classfinder"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dominik Zogg",
+            "email": "dominik.zogg@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": { "Saxulum\\ClassFinder": "src/" }
+    }
+}
