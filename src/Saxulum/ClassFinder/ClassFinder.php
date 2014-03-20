@@ -14,25 +14,16 @@ class ClassFinder
 
         for ($i = 0; $i < $tokenCount; $i++) {
 
-            if (is_array($tokens[$i]) && $tokens[$i][0] === T_NAMESPACE) {
-                $i++;
-                $namespace = '';
+            if (is_array($tokens[$i]) && in_array($tokens[$i][0], array(T_NAMESPACE, T_CLASS))) {
+                $type = $tokens[$i][0]; $i++; $namespace = '';
                 while ($tokens[$i++] && in_array($tokens[$i][0], array(T_NS_SEPARATOR, T_STRING))) {
                     $namespace .= $tokens[$i][1];
                 }
                 $namespaceStack[] = $namespace;
                 $braces[$namespace] = 0;
-            }
-
-            if (is_array($tokens[$i]) && $tokens[$i][0] === T_CLASS) {
-                $i++;
-                $namespace = '';
-                while ($tokens[$i++] && in_array($tokens[$i][0], array(T_NS_SEPARATOR, T_STRING))) {
-                    $namespace .= $tokens[$i][1];
+                if ($type === T_CLASS) {
+                    $classes[] = implode('\\', $namespaceStack);
                 }
-                $namespaceStack[] = $namespace;
-                $braces[$namespace] = 0;
-                $classes[] = implode('\\', $namespaceStack);
             }
 
             if (is_string($tokens[$i]) && $tokens[$i] === '{') {
