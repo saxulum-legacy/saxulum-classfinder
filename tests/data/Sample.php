@@ -19,6 +19,15 @@ namespace What\A\SpecialNamespace
     {
         protected function testMethod() {}
     }
+
+    public function test()
+    {
+        for ($i=0;$i<100;$i++) {
+
+        }
+    }
+
+    $variable = 'test';
 }
 
 namespace Yet\Another\SpecialNamespace
@@ -36,4 +45,14 @@ namespace Yet\Another\SpecialNamespace
     {
 
     }
+}
+
+namespace Single\Line\Test{class X{}}
+
+namespace Add\More\LineBreaks
+
+{
+    class Y
+
+    {}class Z{}
 }

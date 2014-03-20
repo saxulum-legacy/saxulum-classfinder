@@ -4,54 +4,52 @@ namespace Saxulum\ClassFinder;
 
 class ClassFinder
 {
-    /**
-     * @param  string $phpCode
-     * @return array
-     */
     public static function findClasses($phpCode)
     {
         $tokens = token_get_all($phpCode);
-        $count = count($tokens);
-
+        $tokenCount = count($tokens);
         $namespaceStack = array();
-        $namespaceCurlies = array();
-
+        $braces = array();
         $classes = array();
 
-        for ($i = 0; $i < $count; $i++) {
-            if (is_array($tokens[$i]) && $tokens[$i][0] == T_NAMESPACE) {
-                $i += 2;
+        for ($i = 0; $i < $tokenCount; $i++) {
+
+            if (is_array($tokens[$i]) && $tokens[$i][0] === T_NAMESPACE) {
+                $i++;
                 $namespace = '';
-                do {
-                    $namespace .= $tokens[$i++][1];
-                } while (is_array($tokens[$i]) && in_array($tokens[$i][0], array(T_NS_SEPARATOR, T_STRING)));
+                while ($tokens[$i++] && in_array($tokens[$i][0], array(T_NS_SEPARATOR, T_STRING))) {
+                    $namespace .= $tokens[$i][1];
+                }
+                $namespaceStack[] = $namespace;
+                $braces[$namespace] = 0;
+            }
 
-                array_push($namespaceStack, $namespace);
+            if (is_array($tokens[$i]) && $tokens[$i][0] === T_CLASS) {
+                $i++;
+                $namespace = '';
+                while ($tokens[$i++] && in_array($tokens[$i][0], array(T_NS_SEPARATOR, T_STRING))) {
+                    $namespace .= $tokens[$i][1];
+                }
+                $namespaceStack[] = $namespace;
+                $braces[$namespace] = 0;
+                $classes[] = implode('\\', $namespaceStack);
+            }
 
-                if (is_string($tokens[$i]) && $tokens[$i] == '{') {
-                    $namespaceCurlies[$namespace] = 0;
-                } elseif (is_string($tokens[$i + 1]) && $tokens[$i + 1] == '{') {
-                    $namespaceCurlies[$namespace] = 0;
-                    $i++;
+            if (is_string($tokens[$i]) && $tokens[$i] === '{') {
+                $lastNamespace = end($namespaceStack);
+                if ($lastNamespace) {
+                    $braces[$lastNamespace]++;
                 }
             }
 
-            $activeNamespace = end($namespaceStack);
-
-            if (isset($namespaceCurlies[$activeNamespace])) {
-                if (is_string($tokens[$i]) && $tokens[$i] == '{') {
-                    $namespaceCurlies[$activeNamespace]++;
-                } elseif (is_string($tokens[$i]) && $tokens[$i] == '}') {
-                    $namespaceCurlies[$activeNamespace]--;
-                    if ($namespaceCurlies[$activeNamespace] == 0) {
+            if (is_string($tokens[$i]) && $tokens[$i] === '}') {
+                $lastNamespace = end($namespaceStack);
+                if ($lastNamespace) {
+                    $braces[$lastNamespace]--;
+                    if ($braces[$lastNamespace] === 0) {
                         array_pop($namespaceStack);
                     }
                 }
-            }
-
-            if (is_array($tokens[$i]) && $tokens[$i][0] == T_CLASS) {
-                $className = $tokens[$i + 2][1];
-                $classes[] = implode('\\', $namespaceStack) . '\\'. $className;
             }
         }
 
