@@ -11,7 +11,7 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
         $phpCode = file_get_contents(__DIR__ . '/../../../data/Sample.php');
         $classes = ClassFinder::findClasses($phpCode);
 
-        $this->assertCount(8, $classes);
+        $this->assertCount(10, $classes);
         $this->assertEquals('What\A\SpecialNamespace\Test1', $classes[0]);
         $this->assertEquals('What\A\SpecialNamespace\Test2', $classes[1]);
         $this->assertEquals('What\A\SpecialNamespace\Test3', $classes[2]);
@@ -20,5 +20,7 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Single\Line\Test\X', $classes[5]);
         $this->assertEquals('Add\More\LineBreaks\Y', $classes[6]);
         $this->assertEquals('Add\More\LineBreaks\Z', $classes[7]);
+        $this->assertEquals('Without\Braces\SomeClass', $classes[8]);
+        $this->assertEquals('Another\Without\Braces\WhatAClass', $classes[9]);
     }
 }

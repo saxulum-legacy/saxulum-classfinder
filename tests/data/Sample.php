@@ -56,3 +56,18 @@ namespace Add\More\LineBreaks
 
     {}class Z{}
 }
+
+namespace Without\Braces;
+
+class SomeClass
+
+{
+
+}
+
+namespace Another\Without\Braces;
+
+class WhatAClass
+{
+
+}
