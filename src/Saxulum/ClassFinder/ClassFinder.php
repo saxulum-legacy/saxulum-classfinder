@@ -14,7 +14,7 @@ class ClassFinder
 
         for ($i = 0; $i < $tokenCount; $i++) {
 
-            if (is_array($tokens[$i]) && in_array($tokens[$i][0], array(T_NAMESPACE, T_CLASS))) {
+            if (is_array($tokens[$i]) && in_array($tokens[$i][0], array(T_NAMESPACE, T_CLASS)) && $tokens[$i+1][0] === T_WHITESPACE) {
                 $type = $tokens[$i][0]; $i++; $namespace = '';
                 if ($type === T_NAMESPACE) {
                     $namespaceStack = array();
