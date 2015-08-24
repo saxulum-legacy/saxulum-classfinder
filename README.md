@@ -26,7 +26,7 @@ Usage
 Get classes as an array
 
 ``` {.php}
-$phpCode = file_get_contents(__DIR__ . '/../../../data/Sample.php');
+$phpCode = file_get_contents(__DIR__ . '/data/Sample.php');
 $classes = ClassFinder::findClasses($phpCode);
 ```
 
