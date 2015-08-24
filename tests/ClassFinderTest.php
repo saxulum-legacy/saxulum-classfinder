@@ -8,7 +8,7 @@ class ClassFinderTest extends \PHPUnit_Framework_TestCase
 {
     public function testClassFinder()
     {
-        $phpCode = file_get_contents(__DIR__ . '/../../../data/Sample.php');
+        $phpCode = file_get_contents(__DIR__ . '/data/Sample.php');
         $classes = ClassFinder::findClasses($phpCode);
 
         $this->assertCount(10, $classes);
