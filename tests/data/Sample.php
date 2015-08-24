@@ -20,7 +20,7 @@ namespace What\A\SpecialNamespace
         protected function testMethod() {}
     }
 
-    public function test()
+    function test()
     {
         for ($i=0;$i<100;$i++) {
 
